@@ -9,7 +9,7 @@
 
 	if(!isset($_POST['HouseOwner']))
 	{
-		$_POST['HouseOwner'] = $_SESSION['HouseOwner'];
+		$_POST['HouseOwner'] = $_SESSION['Name'];
 	}
 	if(trim($_POST['HouseName']) != "" and trim($_POST['HousePrice']) != "" and trim($_POST['HouseLocation']) != "" and trim($_POST['HouseTime']) != "" and trim($_POST['HouseOwner']) != "")
 	{

@@ -542,6 +542,18 @@ EOT;
 														continue;
 													}
 												}
+												$stmt=$connect->prepare("SELECT * FROM Favorite WHERE favorite_id = :favorite_id AND user_id = :user_id");
+												$stmt->execute(array('favorite_id' => $row['id'], 'user_id' => $_SESSION['id']));
+												if($stmt->rowCount() == 0)
+												{
+													$favor_gray = "";
+													$favor_word = "加入最愛";
+												}
+												else
+												{
+													$favor_gray = "disabled = 'disabled'";
+													$favor_word = "已經加入最愛";
+												}
 												$stmt=$connect->prepare("SELECT information FROM Information WHERE house_id = :house_id");
 												$stmt->execute(array('house_id' => $row['id']));
 												$infoHTML = "<table>";
@@ -551,7 +563,7 @@ EOT;
 												}
 												$infoHTML = $infoHTML."</table>";
 												$rowId = $row['id'];
-												echo "<tr><td valign='top'>".$row['id']."</td><td valign='top'>".$row['name']."</td><td valign='top'>".$row['price']."</td><td valign='top'>".$row['location']."</td><td valign='top'>".$row['time']."</td><td valign='top'>".$row['user']."</td><td valign='top'>".$infoHTML."</td><td valign='top'><form></form><form action='modify_house.php' method='post'><button type='submit' name='delete' value='$rowId'".$gray_button.">刪除</button></form></td><td valign='top'><form action='modify_house.php' method='post'><button type='submit' name='favorite' value='$rowId'>加入最愛</button></form></td></tr>";
+												echo "<tr><td valign='top'>".$row['id']."</td><td valign='top'>".$row['name']."</td><td valign='top'>".$row['price']."</td><td valign='top'>".$row['location']."</td><td valign='top'>".$row['time']."</td><td valign='top'>".$row['user']."</td><td valign='top'>".$infoHTML."</td><td valign='top'><form></form><form action='modify_house.php' method='post'><button type='submit' name='delete' value='$rowId'".$gray_button.">刪除</button></form></td><td valign='top'><form action='modify_house.php' method='post'><button type='submit' name='favorite' value='$rowId' ".$favor_gray.">".$favor_word."</button></form></td></tr>";
 											}
 										}
 										/*while ($row = $stmt->fetch())
